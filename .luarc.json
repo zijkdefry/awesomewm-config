@@ -1,0 +1,11 @@
+{
+    "workspace": {
+        "library": [
+            "/usr/share/awesome/lib"
+        ]
+    },
+    "diagnostics": {
+        "disable": ["lowercase-global"],
+        "globals": ["awesome", "client", "screen", "root", "tag"]
+    }
+}
