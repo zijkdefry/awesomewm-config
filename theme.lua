@@ -1,10 +1,15 @@
-local theme = {
+local config = require("config")
+
+return {
     -- font = "Inconsolata Bold 10",
     -- font = "Fira Code Bold 8"
     font = "Jetbrains Mono Bold 8",
 
     -- TODO: Fix this to use actual wallpaper
-    wallpaper = "/home/zijk/Downloads/wallpaperflare.com_wallpaper.jpg",
+    wallpaper = config.dir .. "wallpaper.jpg",
+
+    bg_bar = "#000000",
+    bar_pos = "top",
 
     bg_normal = "#141414",
     bg_focus = "#303030",
@@ -30,5 +35,3 @@ local theme = {
     taglist_underline_unfocus = "#00000000",
     taglist_underline_focus = "#ffffff",
 }
-
-return theme

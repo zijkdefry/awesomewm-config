@@ -1,17 +1,15 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local gears = require("gears")
+local config= require("config")
 
-
-
-beautiful.init("~/.config/awesome/theme.lua")
+beautiful.init(config.dir .. "theme.lua")
 
 awful.layout.layouts = {
 	awful.layout.suit.tile,
 	awful.layout.suit.floating,
 	awful.layout.suit.max,
 }
-LayoutNames = { "tile", "float", "max" }
 
 local function set_wallpaper(s)
 	if beautiful.wallpaper then

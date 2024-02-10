@@ -1,34 +1,27 @@
 local awful = require("awful")
 local wibox = require("wibox")
-local uiutils = require("ui.utils")
-local gears   = require("gears")
 local beautiful = require("beautiful")
-
-local clock = wibox.widget.textclock("%R")
 
 local function create_bar(s)
 	local bar_inner_widget = wibox.widget {
 		layout = wibox.layout.ratio.horizontal,
 		require("ui.bar_left")(s),
 		{
-			widget = wibox.container.background,
-			bg = "#202020",
-			{
-				widget = wibox.container.place,
-				halign = "center",
-				clock
-			}
+			widget = wibox.container.place,
+			halign = "center",
+			wibox.widget.textclock("%R")
 		},
 		require("ui.bar_right")
 	}
-	bar_inner_widget:ajust_ratio(2, 0.44, 0.12, 0.44)
+
+	bar_inner_widget:ajust_ratio(2, 0.46, 0.08, 0.46)
 
 
 	local bar = awful.wibar {
 		screen = s,
-		position = "bottom",
+		position = beautiful.bar_pos,
 		height = beautiful.bar_size,
-		bg = "#000000"
+		bg = beautiful.bg_bar
 	}
 	bar:setup { bar_inner_widget, layout = wibox.layout.flex.horizontal }
 end

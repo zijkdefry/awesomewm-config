@@ -1,31 +1,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
-local gears = require("gears")
-local config = require("config")
 
-local mod = config.mod
-
-local client_keys = gears.table.join(
-    awful.key({mod}, "space", function(c)
-        c.fullscreen = not c.fullscreen
-        c:raise()
-    end),
-    awful.key({mod}, "q", function(c) c:kill() end)
-)
-
-local client_buttons = gears.table.join(
-    awful.button({}, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-    end),
-    awful.button({mod}, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.move(c)
-    end),
-    awful.button({mod}, 3, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.resize(c)
-    end)
-)
+local client_binds = require("binds.client")
 
 awful.rules.rules = {
     {
@@ -35,8 +11,8 @@ awful.rules.rules = {
             border_color = beautiful.border_normal,
             focus = awful.client.focus.filter,
             raise = true,
-            keys = client_keys,
-            buttons = client_buttons,
+            keys = client_binds.keys,
+            buttons = client_binds.buttons,
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen
         }

@@ -1,5 +1,6 @@
 local awful = require("awful")
 local wibox = require("wibox")
+local config = require("config")
 
 local layout_name = wibox.widget {
     widget = wibox.widget.textbox,
@@ -10,7 +11,7 @@ local layout_name = wibox.widget {
 }
 
 local function update_layout_info(t)
-    local layout = LayoutNames[awful.layout.get_tag_layout_index(t)]
+    local layout = config.layout_names[awful.layout.get_tag_layout_index(t)]
     layout_name.text = layout
 end
 

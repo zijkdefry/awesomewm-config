@@ -25,5 +25,5 @@ do
 end
 
 require("setup")
-require("binds")
+require("binds.root")
 require("rules")

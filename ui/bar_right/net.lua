@@ -3,24 +3,24 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local utils = require("ui.utils")
+local config = require("config")
 
 local function humanise(rate)
     if rate < 1024 then
-        return string.format("%dB/s", rate)
+        return string.format("%.0fB/s", rate)
     elseif rate < 100 * 1024 then
         return string.format("%.1fkB/s", rate / 1024)
     elseif rate < 1024 * 1024 then
         return string.format("%.0fkB/s", rate / 1024)
     elseif rate < 100 * 1024 * 1024 then
         return string.format("%.1fMB/s", rate / 1024 / 1024)
-    else
+    else  
         return string.format("%.0fMB/s", rate / 1024 / 1024)
     end
 end
 
 net_cmd_template = [[ awk '$1 == "%s:" { print $2, $10 }' /proc/net/dev ]]
-net_cmd = string.format(net_cmd_template, "wlan0")
-poll_interval = 5
+net_cmd = string.format(net_cmd_template, config.default_net_interface)
 
 local up_total = 0
 local down_total = 0
@@ -31,7 +31,7 @@ local net = wibox.widget {
     text = "net 0B/s up; 0B/s down"
 }
 
-utils.watch(poll_interval, function()
+utils.watch(config.net_poll_interval, function()
     awful.spawn.easy_async_with_shell(net_cmd, function (stdout)
         local match = string.gmatch(stdout, "[0-9]+")
         down_curr = tonumber(match())
@@ -48,9 +48,9 @@ utils.watch(poll_interval, function()
             return
         end
 
-        net.text = string.format("net %s; up %s down",
-            humanise(up_diff / poll_interval),
-            humanise(down_diff / poll_interval)
+        net.text = string.format("net %s up; %s down",
+            humanise(up_diff / config.net_poll_interval),
+            humanise(down_diff / config.net_poll_interval)
         )
     end)
 end)

@@ -3,6 +3,7 @@
 local wibox = require("wibox")
 local awful = require("awful")
 local utils = require("ui.utils")
+local config= require("config")
 
 local cpu = wibox.widget {
     widget = wibox.widget.textbox,
@@ -13,7 +14,7 @@ local user = 0
 local sys = 0
 local idle = 0
     
-utils.watch(5, function()
+utils.watch(config.cpu_poll_interval, function()
     awful.spawn.easy_async_with_shell(
         [[ awk 'NR==1 {print $2, $4, $5}' /proc/stat ]],
         function (stdout)

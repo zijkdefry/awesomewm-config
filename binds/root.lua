@@ -13,9 +13,9 @@ local global_keys = gears.table.join(
 
     awful.key({mod, ctrl}, "n", awesome.quit),
     awful.key({mod, ctrl}, "m", awesome.restart),
-    awful.key({mod}, "Return", function() awful.spawn(config.terminal_cmd) end),
-    awful.key({mod}, "r", function() awful.spawn(config.rofi_drun_cmd) end),
-    awful.key({mod}, "w", function() awful.spawn(config.rofi_window_cmd) end)
+    awful.key({mod}, "Return", function() awful.spawn(config.terminal) end),
+    awful.key({mod}, "r", function() awful.spawn("rofi -show drun") end),
+    awful.key({mod}, "w", function() awful.spawn("rofi -show window") end)
 )
 
 root.keys(global_keys)

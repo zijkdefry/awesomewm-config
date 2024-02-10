@@ -3,7 +3,7 @@ local gears = require("gears")
 local config = require("config")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
-local utils = require("ui.utils")
+local utils = require("utils")
 
 local taglist_buttons = gears.table.join(
 	awful.button({}, 1, function(t) t:view_only() end),
@@ -46,7 +46,7 @@ local function create_taglist(s)
             },
             {
                 widget = wibox.container.background,
-                bg = "#cccccc",
+                bg = beautiful.fg_normal,
                 id = "underline",
                 shape = utils.underline(beautiful.underline_thickness),
                 { layout = wibox.layout.fixed.horizontal }
