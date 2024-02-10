@@ -9,6 +9,7 @@ return wibox.widget {
     {
         layout = wibox.layout.fixed.horizontal,
         spacing = 20,
+        require("ui.bar_right.net"),
         require("ui.bar_right.cpu"),
         require("ui.bar_right.ram"),
         date

@@ -1,6 +1,6 @@
 local theme = {
     -- font = "Inconsolata Bold 10",
-    -- font = "Fira Code Bold 8",s
+    -- font = "Fira Code Bold 8"
     font = "Jetbrains Mono Bold 8",
 
     -- TODO: Fix this to use actual wallpaper

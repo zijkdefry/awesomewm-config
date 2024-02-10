@@ -1,3 +1,5 @@
+---@diagnostic disable: cast-local-type
+
 local wibox = require("wibox")
 local awful = require("awful")
 local utils = require("ui.utils")
@@ -7,7 +9,9 @@ local cpu = wibox.widget {
     text = "cpu 0.0%"
 }
 
-local cpu_helper = { user = 0, sys = 0, idle = 0 }
+local user = 0
+local sys = 0
+local idle = 0
     
 utils.watch(5, function()
     awful.spawn.easy_async_with_shell(
@@ -18,18 +22,17 @@ utils.watch(5, function()
             sys_curr = tonumber(match())
             idle_curr = tonumber(match())
 
-            delta_user = user_curr - cpu_helper.user
-            delta_sys = sys_curr - cpu_helper.sys
-            delta_idle = idle_curr - cpu_helper.idle
+            delta_user = user_curr - user
+            delta_sys = sys_curr - sys
+            delta_idle = idle_curr - idle
 
-            cpu_helper.user = user_curr
-            cpu_helper.sys = sys_curr
-            cpu_helper.idle = idle_curr
+            user = user_curr
+            sys = sys_curr
+            idle = idle_curr
 
             local usage = (delta_user + delta_sys) * 100.0 / (delta_user + delta_sys + delta_idle)
 
-            local cpuf = string.format("cpu %.1f%%", usage)
-            cpu.text = cpuf
+            cpu.text = string.format("cpu %.1f%%", usage)
         end
     )
 end)
