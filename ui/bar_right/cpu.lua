@@ -4,7 +4,7 @@ local utils = require("ui.utils")
 
 local cpu = wibox.widget {
     widget = wibox.widget.textbox,
-    text = "use 0.0%"
+    text = "cpu 0.0%"
 }
 
 local cpu_helper = { user = 0, sys = 0, idle = 0 }

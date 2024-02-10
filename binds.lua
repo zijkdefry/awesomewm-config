@@ -6,8 +6,6 @@ local ctrl = config.ctrl
 local shift = config.shift
 local mod = config.mod
 
--- Keybindings for window management
-
 local global_keys = gears.table.join(
     awful.key({mod}, "Left", awful.tag.viewprev),
     awful.key({mod}, "Right", awful.tag.viewnext),

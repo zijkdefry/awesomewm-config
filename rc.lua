@@ -1,5 +1,4 @@
 local naughty = require("naughty")
-local awful = require("awful")
 
 if awesome.startup_errors then
 	naughty.notify {
