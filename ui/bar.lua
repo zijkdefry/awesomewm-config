@@ -7,9 +7,11 @@ local function create_bar(s)
 		layout = wibox.layout.ratio.horizontal,
 		require("ui.bar_left")(s),
 		{
-			widget = wibox.container.place,
+			widget = wibox.container.background,
+			bg = "#202020",
+			{widget = wibox.container.place,
 			halign = "center",
-			wibox.widget.textclock("%R")
+			wibox.widget.textclock("%R")}
 		},
 		require("ui.bar_right")
 	}

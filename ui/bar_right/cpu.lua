@@ -2,7 +2,7 @@
 
 local wibox = require("wibox")
 local awful = require("awful")
-local utils = require("ui.utils")
+local utils = require("utils")
 local config= require("config")
 
 local cpu = wibox.widget {

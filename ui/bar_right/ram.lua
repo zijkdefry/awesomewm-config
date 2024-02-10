@@ -1,5 +1,5 @@
 local wibox = require("wibox")
-local utils = require("ui.utils")
+local utils = require("utils")
 local awful = require("awful")
 local config= require("config")
 
