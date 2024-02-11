@@ -1,8 +1,8 @@
 local gears = require("gears")
 
-local uiutils = {}
+local utils = {}
 
-function uiutils.create_right_tag(cr, w, h, d)
+function utils.create_right_tag(cr, w, h, d)
 	cr:move_to(0, 0)
 	cr:line_to(w - d, 0)
 	cr:line_to(w, h/2)
@@ -12,7 +12,7 @@ function uiutils.create_right_tag(cr, w, h, d)
 	cr:close_path()
 end
 
-function uiutils.underline(thickness)
+function utils.underline(thickness)
 	return function(cr, w, h)
 		cr:move_to(0, h)
 		cr:line_to(w, h)
@@ -23,7 +23,7 @@ function uiutils.underline(thickness)
 	end
 end
 
-function uiutils.watch(timeout, callback)
+function utils.watch(timeout, callback)
     gears.timer {
         timeout = timeout,
         call_now = true,
@@ -32,4 +32,4 @@ function uiutils.watch(timeout, callback)
     }
 end
 
-return uiutils
+return utils

@@ -11,6 +11,24 @@ awful.layout.layouts = {
 	awful.layout.suit.max,
 }
 
+local idx_max = 3
+local function update_window_gaps_and_borders(t)
+	local max = awful.layout.get_tag_layout_index(t) == idx_max
+
+	t.gap = max and 0 or beautiful.useless_gap
+
+	local clients = t:clients()
+	if #clients > 0 then
+		for _, c in pairs(clients) do
+			c.border_width = max and 0 or beautiful.border_width
+		end
+	end
+end
+
+tag.connect_signal("property::layout", update_window_gaps_and_borders)
+tag.connect_signal("property::selected", update_window_gaps_and_borders)
+
+
 local function set_wallpaper(s)
 	if beautiful.wallpaper then
 		gears.wallpaper.maximized(beautiful.wallpaper, s, true)
