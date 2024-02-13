@@ -1,6 +1,5 @@
 local awful = require("awful")
 local wibox = require("wibox")
-local config = require("config")
 
 local layout_name = wibox.widget {
     widget = wibox.widget.textbox,
@@ -10,13 +9,11 @@ local layout_name = wibox.widget {
     end)
 }
 
-local function update_layout_info(t)
-    local layout = config.layout_names[awful.layout.get_tag_layout_index(t)]
-    layout_name.text = layout
+local function update_layout_info()
+    local layout = awful.layout.get(awful.screen.focused())
+    layout_name.text = layout.name
 end
-
-local current_tag = awful.screen.focused().selected_tag
-update_layout_info(current_tag)
+update_layout_info()
 
 tag.connect_signal("property::layout", update_layout_info)
 tag.connect_signal("property::selected", update_layout_info)

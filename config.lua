@@ -11,7 +11,6 @@ return {
     terminal = "alacritty",
 
     none_focused_window_name = "i use arch btw",
-    layout_names = { "tile", "float", "max" },
 
     cpu_poll_interval = 5,
     ram_poll_interval = 17,

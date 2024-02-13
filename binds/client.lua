@@ -1,15 +1,18 @@
 local gears = require("gears")
 local awful = require("awful")
 local config = require("config")
+local utils  = require("utils")
 
 local mod = config.mod
+local ctrl = config.ctrl
 
 local client_keys = gears.table.join(
     awful.key({mod}, "space", function(c)
         c.fullscreen = not c.fullscreen
         c:raise()
     end),
-    awful.key({mod}, "q", function(c) c:kill() end)
+    awful.key({mod}, "q", function(c) c:kill() end),
+    awful.key({mod, ctrl}, "t", utils.rofi_move_client_to_tag)
 )
 
 local client_buttons = gears.table.join(

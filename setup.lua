@@ -1,7 +1,7 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
 local gears = require("gears")
-local config= require("config")
+local config = require("config")
 
 beautiful.init(config.dir .. "theme.lua")
 
@@ -11,7 +11,17 @@ awful.layout.layouts = {
 	awful.layout.suit.max,
 }
 
+awful.layout.layouts[1].name = "Tiling"
+awful.layout.layouts[2].name = "Floating"
+awful.layout.layouts[3].name = "Maximised"
 local idx_max = 3
+
+local function update_client_window_borders(c)
+	local max = awful.layout.get_tag_layout_index(c.first_tag) == idx_max
+
+	c.border_width = max and 0 or beautiful.border_width
+end
+
 local function update_window_gaps_and_borders(t)
 	local max = awful.layout.get_tag_layout_index(t) == idx_max
 
@@ -28,6 +38,26 @@ end
 tag.connect_signal("property::layout", update_window_gaps_and_borders)
 tag.connect_signal("property::selected", update_window_gaps_and_borders)
 
+client.connect_signal("manage", function (c)
+	update_client_window_borders(c)
+
+    if not awesome.startup then
+        awful.client.setslave(c)
+    end
+    
+    if awesome.startup
+        and not c.size_hints.user_position
+        and not c.size_hints.program_position
+    then
+        awful.placement.no_offscreen(c)
+    end
+end)
+client.connect_signal("tagged", update_client_window_borders)
+client.connect_signal("mouse::enter", function(c)
+    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+end)
+client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 local function set_wallpaper(s)
 	if beautiful.wallpaper then

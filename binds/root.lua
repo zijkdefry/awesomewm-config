@@ -1,6 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 local config = require("config")
+local utils  = require("utils")
 
 local ctrl = config.ctrl
 local shift = config.shift
@@ -15,7 +16,8 @@ local global_keys = gears.table.join(
     awful.key({mod, ctrl}, "m", awesome.restart),
     awful.key({mod}, "Return", function() awful.spawn(config.terminal) end),
     awful.key({mod}, "r", function() awful.spawn("rofi -show drun") end),
-    awful.key({mod}, "w", function() awful.spawn("rofi -show window") end)
+    awful.key({mod}, "w", function() awful.spawn("rofi -show window") end),
+    awful.key({mod}, "t", utils.rofi_go_to_tag)
 )
 
 root.keys(global_keys)
