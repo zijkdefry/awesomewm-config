@@ -2,7 +2,7 @@ local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 
-local function create_bar(s)
+local function create_bar(s, toggle_sysmenu_visibility)
 	local bar_inner_widget = wibox.widget {
 		layout = wibox.layout.ratio.horizontal,
 		require("ui.bar_left")(s),
@@ -11,7 +11,8 @@ local function create_bar(s)
 			bg = "#202020",
 			{widget = wibox.container.place,
 			halign = "center",
-			wibox.widget.textclock("%R")}
+			wibox.widget.textclock("%R")},
+			buttons = awful.button({}, 1, toggle_sysmenu_visibility)
 		},
 		require("ui.bar_right")
 	}

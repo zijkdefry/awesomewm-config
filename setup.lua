@@ -73,5 +73,6 @@ awful.screen.connect_for_each_screen(function(s)
 		{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
 		s, awful.layout.layouts[1]
 	)
-	create_bar(s)
+	local toggle_sysmenu_visibility = require("ui.sysmenu")(s)
+	create_bar(s, toggle_sysmenu_visibility)
 end)
