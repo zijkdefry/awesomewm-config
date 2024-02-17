@@ -66,12 +66,12 @@ local function set_wallpaper(s)
 end
 screen.connect_signal("property::geometry", set_wallpaper)
 
-local create_bar = require("ui.bar")
 awful.screen.connect_for_each_screen(function(s)
 	set_wallpaper(s)
 	awful.tag(
 		{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
 		s, awful.layout.layouts[1]
 	)
-	create_bar(s)
+	require("ui.bar")(s)
+	require("ui.sysmenu")(s)
 end)

@@ -21,6 +21,9 @@ return {
     fg_minimize = "#cccccc",
 
     bar_size = 26,
+    sysmenu_offset_x = 25,
+    sysmenu_bar_gap = 2,
+
     underline_thickness = 2,
     taglist_left_right_margins = 5,
 

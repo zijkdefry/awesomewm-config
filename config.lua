@@ -1,7 +1,10 @@
 local gears = require("gears")
 
+local home_dir = os.getenv("HOME") .. "/"
+
 return {
     dir = gears.filesystem.get_configuration_dir(),
+    scripts_dir = home_dir .. "scripts/",
     default_net_interface = "wlan0",
 
     mod = "Mod4",

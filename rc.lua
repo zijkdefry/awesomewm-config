@@ -1,3 +1,4 @@
+package.loaded["naughty.dbus"] = {}
 local naughty = require("naughty")
 
 if awesome.startup_errors then

@@ -1,7 +1,7 @@
 local wibox = require("wibox")
 local utils = require("utils")
 local awful = require("awful")
-local config= require("config")
+local config = require("config")
 
 local ram = wibox.widget {
     widget = wibox.widget.textbox,
