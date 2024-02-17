@@ -3,7 +3,7 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears     = require("gears")
 
-local function round_container(wgt, halign)
+local function round_container(wgt)
     return wibox.widget {
         widget = wibox.container.background,
         bg = "#303030",
@@ -13,7 +13,7 @@ local function round_container(wgt, halign)
             left = 8, right = 8,
             {
                 widget = wibox.container.place,
-                halign = halign,
+                halign = "center",
                 wgt
             }
         }
@@ -21,15 +21,28 @@ local function round_container(wgt, halign)
 end
 
 local function create_sysmenu(s)
+    local usage = require("ui.menu.usage")
     local menu_inner_widget = {
         layout = wibox.layout.fixed.vertical,
         spacing = 10,
         {
             widget = wibox.container.place,
             halign = "center",
-            round_container(require("ui.menu.clock"), "center")
+            round_container(require("ui.menu.clock"))
         },
-        round_container(require("ui.menu.wifi"), "left")
+        {
+            layout = wibox.layout.flex.horizontal,
+            round_container(require("ui.menu.volume")),
+            round_container(require("ui.menu.backlight")),
+            spacing = 10
+        },
+        round_container(require("ui.menu.wifi")),
+        {
+            layout = wibox.layout.flex.horizontal,
+            round_container(usage.down),
+            round_container(usage.up),
+            spacing = 10
+        },
     }
 
     local popup = awful.popup {
