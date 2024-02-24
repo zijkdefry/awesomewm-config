@@ -45,27 +45,4 @@ local function move_client_to_tag(client, tag_idx)
 	client:move_to_tag(all_tags[tag_idx])
 end
 
-all_tags_str = "1\\n2\\n3\\n4\\n5\\n6\\n7\\n8\\n9"
-function utils.rofi_go_to_tag()
-	local cmd = string.format(
-		[[ echo -e "%s" | rofi -dmenu -p tag -theme atheme-tag.rasi -mesg "Select Tag"]],
-		all_tags_str
-	)
-	awful.spawn.easy_async_with_shell(cmd, function (stdout)
-		if stdout == "" then return end
-		go_to_tag(tonumber(stdout))
-	end)
-end
-
-function utils.rofi_move_client_to_tag(client)
-	local cmd = string.format(
-		[[ echo -e "%s" | rofi -dmenu -p tag -theme atheme-tag.rasi -mesg "Select Tag"]],
-		all_tags_str
-	)
-	awful.spawn.easy_async_with_shell(cmd, function (stdout)
-		if stdout == "" then return end
-		move_client_to_tag(client, tonumber(stdout))
-	end)
-end
-
 return utils

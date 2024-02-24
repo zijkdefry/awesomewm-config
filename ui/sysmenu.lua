@@ -10,7 +10,7 @@ local function round_container(wgt)
         shape = function (cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
         {
             widget = wibox.container.margin,
-            left = 8, right = 8,
+            left = 12, right = 12, top = 4, bottom = 4,
             {
                 widget = wibox.container.place,
                 halign = "center",
@@ -20,31 +20,30 @@ local function round_container(wgt)
     }
 end
 
-local function create_sysmenu(s)
-    local usage = require("ui.menu.usage")
-    local menu_inner_widget = {
-        layout = wibox.layout.fixed.vertical,
-        spacing = 10,
-        {
-            widget = wibox.container.place,
-            halign = "center",
-            round_container(require("ui.menu.clock"))
-        },
-        {
-            layout = wibox.layout.flex.horizontal,
-            round_container(require("ui.menu.volume")),
-            round_container(require("ui.menu.backlight")),
-            spacing = 10
-        },
-        round_container(require("ui.menu.wifi")),
-        {
-            layout = wibox.layout.flex.horizontal,
-            round_container(usage.down),
-            round_container(usage.up),
-            spacing = 10
-        },
-    }
+local sysinfo = {
+    layout = wibox.layout.fixed.vertical,
+    spacing = 10,
+    {
+        widget = wibox.container.place,
+        halign = "center",
+        round_container(require("ui.menu.clock"))
+    },
+    {
+        layout = wibox.layout.flex.horizontal,
+        round_container(require("ui.menu.volume")),
+        round_container(require("ui.menu.backlight")),
+        spacing = 10
+    },
+    round_container(require("ui.menu.wifi")),
+    {
+        layout = wibox.layout.flex.horizontal,
+        round_container(require("ui.menu.usage").down),
+        round_container(require("ui.menu.usage").up),
+        spacing = 10
+    },
+}
 
+local function create_sysmenu(s)
     local popup = awful.popup {
         screen = s,
         ontop = true,
@@ -58,16 +57,22 @@ local function create_sysmenu(s)
         end,
         widget = wibox.widget {
             widget = wibox.container.constraint,
-            width = 300,
+            width = 600,
             strategy = "exact",
             {
                 widget = wibox.container.margin,
                 margins = 10,
-                menu_inner_widget
+                {
+                    layout = wibox.layout.fixed.horizontal,
+                    spacing = 10,
+                    require("ui.menu.calendar"),
+                    sysinfo,
+                }
             }
         },
-        border_width = 2,
-        border_color = "#cccccc",
+        border_width = 1,
+        border_color = "#ffffff",
+        fg = "#ffffff",
         bg = "#202020"
     }
 

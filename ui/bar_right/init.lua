@@ -10,6 +10,6 @@ return wibox.widget {
         require("ui.bar_right.net"),
         require("ui.bar_right.cpu"),
         require("ui.bar_right.ram"),
-        wibox.widget.textclock("%F %A")
+        wibox.widget.textclock("%H:%M %a %Y-%m-%d")
     }
 }

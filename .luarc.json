@@ -7,5 +7,6 @@
     "diagnostics": {
         "disable": ["lowercase-global"],
         "globals": ["awesome", "client", "screen", "root", "tag"]
-    }
+    },
+    "completion.autoRequire": false
 }

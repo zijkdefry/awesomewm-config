@@ -5,18 +5,22 @@ local beautiful = require("beautiful")
 local function create_bar(s)
 	local bar_inner_widget = wibox.widget {
 		layout = wibox.layout.ratio.horizontal,
-		require("ui.bar_left")(s),
+		require("ui.bar_left"),
 		{
-			widget = wibox.container.background,
-			bg = "#202020",
-			{widget = wibox.container.place,
+			widget = wibox.container.place,
 			halign = "center",
-			wibox.widget.textclock("%R")}
+			valign = "top",
+			{
+				widget = wibox.layout.constraint,
+				height = beautiful.bar_size,
+				strategy = "exact",
+				require("ui.taglist")(s)
+			}
 		},
 		require("ui.bar_right")
 	}
 
-	bar_inner_widget:ajust_ratio(2, 0.46, 0.08, 0.46)
+	bar_inner_widget:ajust_ratio(2, 0.45, 0.1, 0.45)
 
 
 	local bar = awful.wibar {

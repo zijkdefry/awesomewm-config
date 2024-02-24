@@ -11,8 +11,7 @@ local client_keys = gears.table.join(
         c.fullscreen = not c.fullscreen
         c:raise()
     end),
-    awful.key({mod}, "q", function(c) c:kill() end),
-    awful.key({mod, ctrl}, "t", utils.rofi_move_client_to_tag)
+    awful.key({mod}, "q", function(c) c:kill() end)
 )
 
 local client_buttons = gears.table.join(

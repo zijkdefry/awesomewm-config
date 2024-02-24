@@ -5,7 +5,6 @@ return {
     -- font = "Fira Code Bold 8"
     font = "Jetbrains Mono Bold 8",
 
-    -- TODO: Fix this to use actual wallpaper
     wallpaper = config.dir .. "wallpaper.jpg",
 
     bg_bar = "#000000",
@@ -15,10 +14,10 @@ return {
     bg_focus = "#303030",
     bg_urgent = "#ff0000",
 
-    fg_normal = "#cccccc",
-    fg_focus = "#cccccc",
-    fg_urgent = "#cccccc",
-    fg_minimize = "#cccccc",
+    fg_normal = "#ffffff",
+    fg_focus = "#ffffff",
+    fg_urgent = "#ffffff",
+    fg_minimize = "#ffffff",
 
     bar_size = 26,
     sysmenu_offset_x = 25,
@@ -33,8 +32,14 @@ return {
     border_focus  = "#22aadd",
     border_marked = "#ff0000",
 
-    taglist_bg_occupied = "#00000000",
-    taglist_bg_focus = "#ffffff20",
+    taglist_bg_empty = "#000000",
+    taglist_fg_empty = "#808080",
+    taglist_bg_occupied = "#000000",
+    taglist_fg_occupied = "#a0c0ff",
+    taglist_bg_focus = "#202020",
+    taglist_fg_focus = "#ffffff",
+    taglist_bg_urgent = "#800000",
+    taglist_fg_urgent = "#ffffff",
     taglist_underline_unfocus = "#00000000",
     taglist_underline_focus = "#ffffff",
 }
