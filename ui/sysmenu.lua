@@ -49,24 +49,31 @@ local function create_sysmenu(s)
         ontop = true,
         visible = false,
         placement = function(d) 
-            return awful.placement.top(d, {
-                offset = {
-                    x = 0, y = beautiful.bar_size + beautiful.sysmenu_bar_gap
-                }
+            return awful.placement.top_left(d, {
+                offset = { x = 0, y = beautiful.bar_size }
             })
         end,
         widget = wibox.widget {
-            widget = wibox.container.constraint,
-            width = 600,
-            strategy = "exact",
+            widget = wibox.container.margin,
+            margins = 10,
             {
-                widget = wibox.container.margin,
-                margins = 10,
+                layout = wibox.layout.fixed.vertical,
+                spacing = 20,
                 {
                     layout = wibox.layout.fixed.horizontal,
-                    spacing = 10,
+                    spacing = 20,
+                    {
+                        widget = wibox.container.constraint,
+                        width = 300,
+                        strategy = "exact",
+                        sysinfo
+                    },
                     require("ui.menu.calendar"),
-                    sysinfo,
+                },
+                {
+                    widget = wibox.container.place,
+                    halign = "left",
+                    require("ui.menu.notifications")
                 }
             }
         },
