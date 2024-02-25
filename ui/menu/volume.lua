@@ -3,7 +3,7 @@ local awful = require("awful")
 
 local menu_vol = wibox.widget {
     widget = wibox.widget.textbox,
-    font = "JetBrains Mono Bold 10",
+    font = "JetBrains Mono SemiBold 10",
     text = "vol: 42"
 }
 

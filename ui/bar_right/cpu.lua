@@ -38,4 +38,12 @@ utils.watch(config.cpu_poll_interval, function()
     )
 end)
 
-return cpu
+return {
+    layout = wibox.layout.fixed.horizontal,
+    spacing = 5,
+    {
+        widget = wibox.widget.imagebox,
+        image = config.dir .. "icons/thingclock.png",
+    },
+    cpu
+}

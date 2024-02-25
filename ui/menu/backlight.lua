@@ -3,7 +3,7 @@ local awful = require("awful")
 
 local menu_backlight = wibox.widget {
     widget = wibox.widget.textbox,
-    font = "JetBrains Mono Bold 10",
+    font = "JetBrains Mono SemiBold 10",
     text = "bkl: 42%"
 }
 

@@ -1,17 +1,9 @@
 local gears = require("gears")
 local awful = require("awful")
+local beautiful = require("beautiful")
+local wibox = require("wibox")
 
 local utils = {}
-
-function utils.create_right_tag(cr, w, h, d)
-	cr:move_to(0, 0)
-	cr:line_to(w - d, 0)
-	cr:line_to(w, h/2)
-	cr:line_to(w - d, h)
-	cr:line_to(0, h)
-
-	cr:close_path()
-end
 
 function utils.underline(thickness)
 	return function(cr, w, h)
@@ -33,16 +25,20 @@ function utils.watch(timeout, callback)
     }
 end
 
-local all_tags = nil
-local function go_to_tag(tag_idx)
-	if (not all_tags) then all_tags = root.tags() end
+function utils.powerline_container(wgt, bg, right)
+	local d = right and -beautiful.powerline_depth or beautiful.powerline_depth
 
-	all_tags[tag_idx]:view_only()
-end
-
-local function move_client_to_tag(client, tag_idx)
-	if (not all_tags) then all_tags = root.tags() end
-	client:move_to_tag(all_tags[tag_idx])
+	return {
+        widget = wibox.container.background,
+        bg = bg,
+        shape = function(cr, w, h) gears.shape.powerline(cr, w, h, d) end,
+        {
+            widget = wibox.container.margin,
+            left = beautiful.powerline_margin,
+            right = beautiful.powerline_margin,
+            wgt,
+        }
+    }
 end
 
 return utils

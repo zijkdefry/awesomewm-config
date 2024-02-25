@@ -4,7 +4,7 @@ local config= require("config")
 
 local menu_wifi = wibox.widget {
     widget = wibox.widget.textbox,
-    font = "JetBrains Mono Bold 10",
+    font = "JetBrains Mono SemiBold 10",
     text = "wifi: N/A"
 }
 
