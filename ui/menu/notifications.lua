@@ -9,7 +9,7 @@ local function create_notif_container()
     local time_wgt = wibox.widget {
         widget = wibox.widget.textbox,
         text = "",
-        font = "JetBrains Mono Regular 8"
+        font = "JetBrains Mono Regular 8",
     }
 
     local appname_wgt = wibox.widget {
@@ -46,23 +46,26 @@ local function create_notif_container()
                 widget = wibox.container.margin,
                 margins = 8,
                 {
-                    widget = wibox.container.constraint,
-                    width = 475,
-                    strategy = "exact",
+                    layout = wibox.layout.fixed.vertical,
                     {
-                        layout = wibox.layout.fixed.vertical,
-                        {
-                            layout = wibox.layout.align.horizontal,
-                            appname_wgt,
-                            nil,
-                            time_wgt
+                        layout = wibox.layout.align.horizontal,
+                        { 
+                            widget = wibox.container.background,
+                            fg = "#afff87",
+                            appname_wgt
                         },
+                        nil,
                         {
-                            widget = wibox.container.constraint,
-                            height = 88,
-                            strategy = "max",
-                            summ_wgt
+                            widget = wibox.container.background,
+                            fg = "#a787ff",
+                            time_wgt
                         }
+                    },
+                    {
+                        widget = wibox.container.constraint,
+                        height = 88,
+                        strategy = "max",
+                        summ_wgt
                     }
                 }
             }
@@ -77,10 +80,33 @@ notifs = {
     spacing = 10
 }
 
+local notif_log_cmd =
+    config.terminal .. " --class term-float -e python " .. config.scripts_dir .. "pydunst-wrapper.py history"
 notifs[1] = wibox.widget {
-    widget = wibox.widget.textbox,
-    text = "Latest Notifications",
-    font = "JetBrains Mono Bold 10"
+    layout = wibox.layout.align.horizontal,
+    {
+        widget = wibox.widget.textbox,
+        text = "Latest Notifications",
+        font = "JetBrains Mono Bold 10"
+    },
+    nil,
+    {
+        widget = wibox.container.background,
+        bg = "#303030",
+        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
+        {
+            widget = wibox.container.margin,
+            margins = 4,
+            {
+                widget = wibox.widget.textbox,
+                text = "log",
+                font = "JetBrains Mono SemiBold 10"
+            }
+        },
+        buttons = awful.button({}, 1, function()
+            awful.spawn(notif_log_cmd)
+        end)
+    }
 }
 
 setns = {}

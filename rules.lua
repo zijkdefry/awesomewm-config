@@ -14,7 +14,16 @@ awful.rules.rules = {
             keys = client_binds.keys,
             buttons = client_binds.buttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen
+            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen
+        }
+    },
+    {
+        rule_any = { instance = {"term-float"} },
+        properties = {
+            floating = true,
+            placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen,
+            width = 850,
+            height = 450,
         }
     }
 }

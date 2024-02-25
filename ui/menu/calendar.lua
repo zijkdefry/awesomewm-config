@@ -69,7 +69,7 @@ local function cal_day(wgt, day, today)
             {
                 widget = wibox.container.place,
                 halign = "center",
-                wgt
+                wgt,
             }
         }
     }
@@ -102,7 +102,7 @@ local function cal_button(text, fg, btn)
         widget = wibox.container.background,
         bg = "#303030",
         fg = fg,
-        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 5) end,
+        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
         buttons = awful.button({}, 1, btn),
         {
             widget = wibox.container.margin,
@@ -156,8 +156,12 @@ return {
     spacing = 10,
     calendar,
     {
-        layout = wibox.layout.fixed.horizontal,
-        spacing = 10,
-        ydec, mdec, reset, minc, yinc
+        widget = wibox.container.place,
+        halign = "right",
+        {
+            layout = wibox.layout.fixed.horizontal,
+            spacing = 10,
+            ydec, mdec, reset, minc, yinc
+        }
     }
 }

@@ -16,13 +16,13 @@ end
 
 local up = wibox.widget {
     widget = wibox.widget.textbox,
-    font = "JetBrains Mono Bold 10",
+    font = "JetBrains Mono SemiBold 10",
     text = "tx: 0MB"
 }
 
 local down = wibox.widget {
     widget = wibox.widget.textbox,
-    font = "JetBrains Mono Bold 10",
+    font = "JetBrains Mono SemiBold 10",
     text = "rx: 0MB"
 }
 
@@ -41,4 +41,11 @@ awesome.connect_signal("sysmenu::show", function()
     end)
 end)
 
-return { up = up, down = down }
+return function(cont)
+    return wibox.widget {
+        layout = wibox.layout.flex.horizontal,
+        cont(down, "#3fafff"),
+        cont(up, "#ff3fff"),
+        spacing = 10
+    }
+end

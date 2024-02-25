@@ -3,10 +3,11 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears     = require("gears")
 
-local function round_container(wgt)
+local function round_container(wgt, fg)
     return wibox.widget {
         widget = wibox.container.background,
         bg = "#303030",
+        fg = fg,
         shape = function (cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
         {
             widget = wibox.container.margin,
@@ -21,26 +22,26 @@ local function round_container(wgt)
 end
 
 local sysinfo = {
-    layout = wibox.layout.fixed.vertical,
-    spacing = 10,
+    layout = wibox.layout.align.vertical,
     {
-        widget = wibox.container.place,
-        halign = "center",
-        round_container(require("ui.menu.clock"))
+        layout = wibox.layout.fixed.vertical,
+        spacing = 10,
+        {
+            widget = wibox.container.place,
+            halign = "center",
+            round_container(require("ui.menu.clock"), nil)
+        },
+        {
+            layout = wibox.layout.flex.horizontal,
+            round_container(require("ui.menu.volume"), "#8787ff"),
+            round_container(require("ui.menu.backlight"), "#ffff87"),
+            spacing = 10
+        },
+        round_container(require("ui.menu.wifi"), "#afff87"),
+        require("ui.menu.usage")(round_container),
     },
-    {
-        layout = wibox.layout.flex.horizontal,
-        round_container(require("ui.menu.volume")),
-        round_container(require("ui.menu.backlight")),
-        spacing = 10
-    },
-    round_container(require("ui.menu.wifi")),
-    {
-        layout = wibox.layout.flex.horizontal,
-        round_container(require("ui.menu.usage").down),
-        round_container(require("ui.menu.usage").up),
-        spacing = 10
-    },
+    nil,
+    require("ui.menu.sysact_bar")
 }
 
 local function create_sysmenu(s)
@@ -54,25 +55,26 @@ local function create_sysmenu(s)
             })
         end,
         widget = wibox.widget {
-            widget = wibox.container.margin,
-            margins = 10,
+            widget = wibox.container.constraint,
+            width = 600,
+            strategy = "exact",
             {
-                layout = wibox.layout.fixed.vertical,
-                spacing = 20,
+                widget = wibox.container.margin,
+                margins = 10,
                 {
-                    layout = wibox.layout.fixed.horizontal,
+                    layout = wibox.layout.fixed.vertical,
                     spacing = 20,
                     {
-                        widget = wibox.container.constraint,
-                        width = 300,
-                        strategy = "exact",
-                        sysinfo
+                        layout = wibox.layout.align.horizontal,
+                        {
+                            widget = wibox.container.constraint,
+                            width = 300,
+                            strategy = "exact",
+                            sysinfo
+                        },
+                        nil,
+                        require("ui.menu.calendar"),
                     },
-                    require("ui.menu.calendar"),
-                },
-                {
-                    widget = wibox.container.place,
-                    halign = "left",
                     require("ui.menu.notifications")
                 }
             }

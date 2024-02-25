@@ -5,6 +5,7 @@ local home_dir = os.getenv("HOME") .. "/"
 return {
     dir = gears.filesystem.get_configuration_dir(),
     scripts_dir = home_dir .. "scripts/",
+    rofi_scripts = home_dir .. "scripts/rofi/",
     default_net_interface = "wlan0",
 
     mod = "Mod4",
