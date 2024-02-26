@@ -17,13 +17,13 @@ end
 local up = wibox.widget {
     widget = wibox.widget.textbox,
     font = "JetBrains Mono SemiBold 10",
-    text = "tx: 0MB"
+    text = "0MB"
 }
 
 local down = wibox.widget {
     widget = wibox.widget.textbox,
     font = "JetBrains Mono SemiBold 10",
-    text = "rx: 0MB"
+    text = "0MB"
 }
 
 local cmd = string.format(
@@ -36,16 +36,34 @@ awesome.connect_signal("sysmenu::show", function()
         local rx = tonumber(matches())
         local tx = tonumber(matches())
 
-        down.text = string.format("rx: %s", humanise(rx))
-        up.text = string.format("tx: %s", humanise(tx))
+        down.text = humanise(rx)
+        up.text = humanise(tx)
     end)
 end)
 
 return function(cont)
     return wibox.widget {
         layout = wibox.layout.flex.horizontal,
-        cont(down, "#3fafff"),
-        cont(up, "#ff3fff"),
+        cont({
+            layout = wibox.layout.fixed.horizontal,
+            spacing = 10,
+            {
+                widget = wibox.container.constraint,
+                height = 25,
+                strategy = "max",
+                wibox.widget.imagebox(config.icons_dir .. "rx-icon.png")
+            }, down
+        }, "#3fafff"),
+        cont({
+            layout = wibox.layout.fixed.horizontal,
+            spacing = 10,
+            {
+                widget = wibox.container.constraint,
+                height = 25,
+                strategy = "max",
+                wibox.widget.imagebox(config.icons_dir .. "tx-icon.png")
+            }, up
+        }, "#ff3fff"),
         spacing = 10
     }
 end

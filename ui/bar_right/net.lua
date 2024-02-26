@@ -26,10 +26,8 @@ local up_total = 0
 local down_total = 0
 local initial_poll = true
 
-local net = wibox.widget {
-    widget = wibox.widget.textbox,
-    text = "net 0B/s up; 0B/s down"
-}
+local down = wibox.widget.textbox("0B/s")
+local up = wibox.widget.textbox("0B/s")
 
 utils.watch(config.net_poll_interval, function()
     awful.spawn.easy_async_with_shell(net_cmd, function (stdout)
@@ -48,11 +46,18 @@ utils.watch(config.net_poll_interval, function()
             return
         end
 
-        net.text = string.format("net %s up; %s down",
-            humanise(up_diff / config.net_poll_interval),
-            humanise(down_diff / config.net_poll_interval)
-        )
+        up.text = humanise(up_diff / config.net_poll_interval)
+        down.text = humanise(down_diff / config.net_poll_interval)
+        
     end)
 end)
 
-return net
+return {
+    layout = wibox.layout.fixed.horizontal,
+    up,
+    {
+        widget = wibox.widget.imagebox,
+        image = config.icons_dir .. "up-down.png",
+    },
+    down
+}

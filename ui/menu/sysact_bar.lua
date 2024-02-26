@@ -3,26 +3,26 @@ local awful = require("awful")
 local gears = require("gears")
 local config= require("config")
 
-local function make_btn(text, fg, btn)
+local function make_btn(img, btn)
     return wibox.widget {
         widget = wibox.container.background,
         bg = "#303030",
-        fg = fg,
         shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
         buttons = awful.button({}, 1, btn),
         {
             widget = wibox.container.margin,
             margins = 4,
             {
-                widget = wibox.widget.textbox,
-                font = "JetBrains Mono Bold 10",
-                text = text
+                widget = wibox.container.constraint,
+                width = 30, height = 30,
+                strategy = "exact",
+                wibox.widget.imagebox(img)
             }
         }
     }
 end
 
-local shutdown = make_btn("sd", "#ff8700", function()
+local shutdown = make_btn(config.icons_dir .. "shutdown-icon.png", function()
     awful.spawn.easy_async_with_shell(config.rofi_scripts .. "confirmation 'Shutdown system'", function (stdout)
         if stdout:match("yes") then
             awful.spawn("systemctl poweroff")
@@ -30,7 +30,7 @@ local shutdown = make_btn("sd", "#ff8700", function()
     end)
 end)
 
-local reboot = make_btn("rb", "#0087ff", function()
+local reboot = make_btn(config.icons_dir .. "reboot-icon.png", function()
     awful.spawn.easy_async_with_shell(config.rofi_scripts .. "confirmation 'Reboot system'", function (stdout)
         if stdout:match("yes") then
             awful.spawn("systemctl reboot")

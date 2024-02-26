@@ -7,7 +7,7 @@ local config= require("config")
 
 local cpu = wibox.widget {
     widget = wibox.widget.textbox,
-    text = "cpu 0.0%"
+    text = "0.0%"
 }
 
 local user = 0
@@ -33,17 +33,17 @@ utils.watch(config.cpu_poll_interval, function()
 
             local usage = (delta_user + delta_sys) * 100.0 / (delta_user + delta_sys + delta_idle)
 
-            cpu.text = string.format("cpu %.1f%%", usage)
+            cpu.text = string.format("%.1f%%", usage)
         end
     )
 end)
 
 return {
-    layout = wibox.layout.fixed.horizontal,
     spacing = 5,
+    layout = wibox.layout.fixed.horizontal,
     {
         widget = wibox.widget.imagebox,
-        image = config.dir .. "icons/thingclock.png",
+        image = config.icons_dir .. "cpu-icon.png",
     },
     cpu
 }

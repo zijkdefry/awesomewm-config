@@ -1,9 +1,11 @@
 local gears = require("gears")
 
 local home_dir = os.getenv("HOME") .. "/"
+local config_dir = gears.filesystem.get_configuration_dir()
 
 return {
-    dir = gears.filesystem.get_configuration_dir(),
+    dir = config_dir,
+    icons_dir = config_dir .. "icons/",
     scripts_dir = home_dir .. "scripts/",
     rofi_scripts = home_dir .. "scripts/rofi/",
     default_net_interface = "wlan0",

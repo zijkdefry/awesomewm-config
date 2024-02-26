@@ -13,12 +13,13 @@ return wibox.widget {
         {
             layout = wibox.layout.fixed.horizontal,
             spacing = beautiful.powerline_gap - beautiful.powerline_depth,
-            utils.powerline_container(require("ui.bar_right.net"), "#8f3f00", true),
-            utils.powerline_container(require("ui.bar_right.cpu"), "#005f5f", true),
-            utils.powerline_container(require("ui.bar_right.ram"), "#005f00", true),
+            utils.powerline_container(require("ui.bar_right.net"), "#7f007f", true),
+            utils.powerline_container(require("ui.bar_right.cpu"), "#9f007f", true),
+            utils.powerline_container(require("ui.bar_right.ram"), "#9f9f00", true),
+            utils.powerline_container(require("ui.bar_right.layout_name"), "#3f7f00", true),
             {
                 widget = wibox.container.background,
-                bg = "#5f005f",
+                bg = "#005f2f",
                 shape = function(cr, w, h) gears.shape.rectangular_tag(cr, w, h, beautiful.powerline_depth) end,
                 {
                     widget = wibox.container.margin,

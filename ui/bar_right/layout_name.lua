@@ -1,5 +1,6 @@
 local awful = require("awful")
 local wibox = require("wibox")
+local config= require("config")
 
 local layout_name = wibox.widget {
     widget = wibox.widget.textbox,
@@ -18,4 +19,12 @@ update_layout_info()
 tag.connect_signal("property::layout", update_layout_info)
 tag.connect_signal("property::selected", update_layout_info)
 
-return layout_name
+return {
+    spacing = 5,
+    layout = wibox.layout.fixed.horizontal,
+    {
+        widget = wibox.widget.imagebox,
+        image = config.icons_dir .. "layout-icon.png",
+    },
+    layout_name
+}

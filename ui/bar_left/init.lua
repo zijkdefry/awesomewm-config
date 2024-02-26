@@ -1,30 +1,37 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local utils = require("utils")
+local config= require("config")
+local awful = require("awful")
 
-local function make_right_tag(cr, w, h, d)
-    cr:move_to(0, 0)
-	cr:line_to(w - d, 0)
-	cr:line_to(w, h/2)
-	cr:line_to(w - d, h)
-	cr:line_to(0, h)
-
-	cr:close_path()
-end
-
-return wibox.widget {
-    layout = wibox.layout.fixed.horizontal,
-    spacing = beautiful.powerline_gap - beautiful.powerline_depth,
-    {
-        widget = wibox.container.background,
-        bg = "#870000",
-        shape = function(cr, w, h) make_right_tag(cr, w, h, beautiful.powerline_depth) end,
+return function(s) 
+    return wibox.widget {
+        layout = wibox.layout.fixed.horizontal,
+        spacing = 15,
         {
-            widget = wibox.container.margin,
-            left = beautiful.bar_screen_edge_gap,
-            right = beautiful.powerline_margin,
-            require("ui.bar_left.layout_name"),
+            layout = wibox.layout.fixed.horizontal,
+            spacing = 5,
+            require("ui.bar_left.taglist")(s),
+            {
+                widget = wibox.widget.imagebox,
+                image = config.icons_dir .. "apps-icon.png",
+                buttons = awful.button({}, 1, function() awful.spawn("rofi -show drun") end),
+            },
+            {
+                widget = wibox.widget.imagebox,
+                image = config.icons_dir .. "dropdown-icon.png",
+                buttons = awful.button({}, 1, function() awesome.emit_signal("sysmenu::toggle") end),
+            }
+        },
+        {
+            layout = wibox.layout.fixed.horizontal,
+            spacing = 5,
+            {
+                widget = wibox.widget.imagebox,
+                image = config.icons_dir .. "win-icon.png",
+                buttons = awful.button({}, 1, function() awful.spawn("rofi -show window") end),
+            },
+            require("ui.bar_left.window_name")
         }
-    },
-    utils.powerline_container(require("ui.bar_left.window_name"), "#002f87", false)
-}
+    }
+end

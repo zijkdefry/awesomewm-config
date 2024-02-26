@@ -5,15 +5,25 @@ local config= require("config")
 local menu_wifi = wibox.widget {
     widget = wibox.widget.textbox,
     font = "JetBrains Mono SemiBold 10",
-    text = "wifi: N/A"
+    text = "N/A"
 }
 
 local cmd = config.scripts_dir .. "iwd-getwifi"
 awesome.connect_signal("sysmenu::show", function()
     awful.spawn.easy_async_with_shell(cmd, function (stdout)
         local wifi_name = string.gsub(stdout, "\n", "")
-        menu_wifi.text = string.format("wifi: %s", wifi_name)
+        menu_wifi.text = wifi_name
     end)
 end)
 
-return menu_wifi
+return {
+    layout = wibox.layout.fixed.horizontal,
+    spacing = 10,
+    {
+        widget = wibox.container.constraint,
+        height = 25,
+        strategy = "max",
+        wibox.widget.imagebox(config.icons_dir .. "wifi-icon.png")
+    },
+    menu_wifi
+}
