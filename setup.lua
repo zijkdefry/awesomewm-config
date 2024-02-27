@@ -4,6 +4,7 @@ local gears = require("gears")
 local config = require("config")
 
 beautiful.init(config.dir .. "theme.lua")
+awesome.set_preferred_icon_size(beautiful.bar_size)
 
 awful.layout.layouts = {
 	awful.layout.suit.tile,

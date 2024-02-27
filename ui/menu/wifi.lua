@@ -19,6 +19,9 @@ end)
 return {
     layout = wibox.layout.fixed.horizontal,
     spacing = 10,
+    buttons = awful.button({}, 1, function()
+        awful.spawn(config.rofi_scripts .. "wifi-menu")
+    end),
     {
         widget = wibox.container.constraint,
         height = 25,

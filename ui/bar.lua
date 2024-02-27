@@ -4,11 +4,13 @@ local beautiful = require("beautiful")
 
 local function create_bar(s)
 	local bar_inner_widget = wibox.widget {
-		layout = wibox.layout.flex.horizontal,
+		layout = wibox.layout.ratio.horizontal,
 		require("ui.bar_left")(s),
-		--nil,
+		{ layout = wibox.layout.fixed.horizontal },
 		require("ui.bar_right")
 	}
+
+	bar_inner_widget:ajust_ratio(2, 0.61, 0.02, 0.37)
 
 	local bar = awful.wibar {
 		screen = s,

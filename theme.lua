@@ -25,7 +25,7 @@ return {
     taglist_left_right_margins = 5,
 
     powerline_depth = 10,
-    powerline_gap = 4,
+    powerline_gap = 5,
     powerline_margin = 14,
     bar_screen_edge_gap = 8,
 
