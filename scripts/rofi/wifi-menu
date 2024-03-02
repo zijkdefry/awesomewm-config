@@ -1,0 +1,79 @@
+#!/usr/bin/bash
+
+iwctl station wlan0 scan
+
+NETWORKS=$(
+	iwctl station wlan0 get-networks \
+	| tail -n +5 \
+	| sed -r "
+		1s/\x1B\[0m  (\x1B\[1;90m)?(>| ) (\x1B\[0m)?  (.*)$/\2 \4/;
+		s/(>| ) *(.{32}) *(psk|open) *(\**).*$/\1\3%start-name%\2%end-name% %strength\4%/;
+		s/ *%end-name%/%end-name%/;
+		1s/>(psk|open)%start-name%/<span foreground='#60b0ff'>/;
+		s/ psk%start-name%/<span foreground='#bbff77'>/;
+		s/ open%start-name%/<span foreground='#ffb060'>/;
+		s/%end-name%/<\/span>/;
+		s/%strength\*\*\*\*%/<span foreground='#00ffff'>\(very strong\)<\/span>/;
+		s/%strength\*\*\*%/<span foreground='#00ff00'>\(strong\)<\/span>/;
+		s/%strength\*\*%/<span foreground='#ffff00'>\(moderate\)<\/span>/;
+		s/%strength\*%/<span foreground='#ff0000'>\(weak\)<\/span>/"
+)
+
+if ! SELECTED_WIFI_RAW=$(
+	echo "$NETWORKS" \
+	| rofi -dmenu -p wifi -hover-select \
+		-theme-str "
+			element { children: [element-text]; }
+			element-icon { enabled: false; }
+			element-text { markup: true; }"
+);
+	then exit 1; fi
+
+SELECTED_WIFI=$(
+	echo "$SELECTED_WIFI_RAW" \
+	| sed -r "
+		s/<span foreground='#[0-9a-fA-F]*'>//;
+		s/<\/span>.*$//;"
+)
+
+is_connected_wifi() {
+	grep "foreground='#60b0ff'" -q <<< "$1"
+}
+
+is_open_wifi() {
+	grep "foreground='#ffb060'" -q <<< "$1"
+}
+
+is_known_network() {
+	iwctl known-networks list | grep "$1" -q
+}
+
+connect_wifi() {
+	if is_connected_wifi "$1" || is_open_wifi "$1" || is_known_network "$2"; then
+		iwctl station wlan0 connect "$2"
+		return $?
+	fi
+	
+	if ! PASSWORD=$(
+		rofi -dmenu -p password -password \
+			-theme-str "
+				window { width: 450; }
+				listview { enabled: false; }"
+	);
+		then exit 1; fi
+	
+	iwctl --dont-ask --passphrase "$PASSWORD" \
+		station wlan0 connect "$2" > /dev/null;
+}
+
+sleep 0.1; # Sleep to prevent Rofi from killing itself because it doesn't have the mouse on it
+
+if connect_wifi "$SELECTED_WIFI_RAW" "$SELECTED_WIFI"; then
+	notify-send -a WiFi_Menu -t 3000 -u normal \
+		"Succesfully connected to $SELECTED_WIFI"
+	exit 0
+fi
+
+notify-send -a WiFi_Menu -t 3000 -u critical \
+	"Failed to connect to $SELECTED_WIFI"
+exit 1

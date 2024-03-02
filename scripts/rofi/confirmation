@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+THEME_STR="
+window { width: 300; }
+element {
+	padding: 8px 30px;
+	children: [element-text];
+}
+element-icon { enabled: false; }
+listview { lines: 2; }
+textbox { font: \"JetBrains Mono SemiBold 14\"; }
+inputbar { enabled: false; }
+prompt { enabled: false; }
+entry { enabled: false; }"
+
+OPTS=$(echo -e "yes\nno")
+rofi -dmenu -mesg "$1" -theme-str "$THEME_STR" <<< "$OPTS"

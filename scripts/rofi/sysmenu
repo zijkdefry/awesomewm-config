@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+SCRIPTS_DIR=$HOME/scripts
+ROFI_SCRIPTS=$SCRIPTS_DIR/rofi
+OPTS=$(
+	echo -e "WiFi menu"
+	echo -e "Shutdown computer"
+	echo -e "Restart computer"
+)
+
+case $(rofi -dmenu -p sys <<< "$OPTS") in
+	WiFi*)
+		$ROFI_SCRIPTS/wifi-menu;;
+	Shut*)
+		systemctl poweroff;;
+	Res*)
+		systemctl restart;;
+esac

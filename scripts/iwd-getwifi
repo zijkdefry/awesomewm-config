@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+IWDSHOW=$(iwctl station wlan0 show)
+
+if ! echo "$IWDSHOW" | grep "State \+connected" > /dev/null; then
+    echo "-disconnected-"
+fi
+
+echo "$IWDSHOW" | grep "Connected network" | sed "s/ \+Connected network \+//;s/ \+$//"
